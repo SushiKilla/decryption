@@ -1,0 +1,9 @@
+A checked exception is one that must be dealt with in the code, either with
+a "throws" declaration or a "try-catch" statement.
+
+An unchecked exception is one that does not have to be dealt with. If one
+such exception is thrown, usually it is attributed to the errors in the code.
+
+NullPointerException is unchecked
+
+Checked Exceptions are declared with the throws keyword.

@@ -1,0 +1,2 @@
+If an exception does not have a matching catch clause, it becomes a
+compile time error.
