@@ -1,4 +1,4 @@
-package p15_5;
+package p15_4;
 
 public class InsufficientFundsException extends Exception {
 	/**
