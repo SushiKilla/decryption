@@ -16,7 +16,7 @@ public class StudentDataInterface {
 		
 		Scanner k = new Scanner(System.in);
 		System.out.println("Please enter an existing file path or create a new one "
-				+ "(e.g. h:/workspace/Long, David/chapter16/StudentData.bin) : ");
+				+ "(e.g. H:/git-repositories/decryption/Long, David/chapter16/StudentData.bin) : ");
 		boolean fileFound = false;
 		
 		while (!fileFound)
@@ -76,22 +76,22 @@ public class StudentDataInterface {
 						{
 							System.out.println("Enter number (Nth student)");
 							Student stu = s.getStudentN(k.nextInt());
-							System.out.println("The ID is " + stu);
+							System.out.println("The Student is " + stu);
 						}
 						else if (c == 2)
 						{
 							System.out.println("Enter number (Nth student)");
-							System.out.println("The First Name is " + s.get_ID_of_student_n(k.nextInt()));
+							System.out.println("The ID is " + s.get_ID_of_student_n(k.nextInt()));
 						}
 						else if (c == 3)
 						{
 							System.out.println("Enter number (Nth student)");
-							System.out.println("The Last Name is " + s.get_firstName_of_student_n(k.nextInt()));
+							System.out.println("The First Name is " + s.get_firstName_of_student_n(k.nextInt()));
 						}
 						else if (c == 4)
 						{
 							System.out.println("Enter number (Nth student)");
-							System.out.println("The GPA is " + s.get_lastName_of_student_n(k.nextInt()));
+							System.out.println("The Last Name is " + s.get_lastName_of_student_n(k.nextInt()));
 						}
 						else if (c == 5)
 						{
