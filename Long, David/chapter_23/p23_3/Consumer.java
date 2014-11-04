@@ -11,7 +11,15 @@ public class Consumer implements Runnable{
 	}
 	
 	public void run() {
-		
+		for (int i = 0; i < iter; i++)
+		{
+			try {
+				String a = q.remove();
+				System.out.println("Consumer consumed a String: " + a + ", SIZE: " + q.size());
+			} catch (InterruptedException e) {
+				System.out.println("Consumer interupted");
+			}
+		}
 	}
 
 }

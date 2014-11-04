@@ -31,7 +31,8 @@ public class SynchronizedQueue<E>{
 				notFull.await();
 			
 			queue.add(arg0);
-			notEmpty.signal();
+			//System.out.println("added");
+			notEmpty.signalAll();
 		}
 		finally
 		{
@@ -39,22 +40,29 @@ public class SynchronizedQueue<E>{
 		}
 
 	}
-	public void remove() throws InterruptedException {
+	public E remove() throws InterruptedException {
+		E a = null;
 		lock.lock();
 		try
 		{
 			while (queue.size() == 0)
 				notEmpty.await();
-			queue.remove(0);
-			notFull.signal();
+			//System.out.println("removed");
+			a = queue.remove(0);
+			notFull.signalAll();
 		}
 		finally
 		{
 			lock.unlock();
 		}
+		return a;
 	}
 
 	public int maxSize() {
 		return maxSize;
+	}
+	
+	public int size(){
+		return queue.size();
 	}
 }
