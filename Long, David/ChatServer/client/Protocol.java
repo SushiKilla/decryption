@@ -54,9 +54,10 @@ public class Protocol {
 		out.flush();
 	}
 	
-	public void disconnect()
+	public void disconnect() throws IOException
 	{
 		out.close();
+		s.close();
 	}
 	
 }
