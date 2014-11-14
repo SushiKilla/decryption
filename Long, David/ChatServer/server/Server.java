@@ -36,7 +36,7 @@ public class Server {
 		    		clientSockets.add(c);
 		    		
 		    		//create thread to deal with client
-		    		
+		    		threads.add(new ClientThread("", serverNum));
 		    		
 		    		
 		    	}

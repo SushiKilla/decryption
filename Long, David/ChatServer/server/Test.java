@@ -1,19 +1,30 @@
 package server;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.util.Scanner;
+import java.io.*;
+import java.net.*;
+import java.util.*;
 
 public class Test {
 	private static final String host = "java.sun.com";
 	private static final int port = 80;
 	private static final String resource = "/";
 	public static void main(String[] args) throws UnknownHostException, IOException {
+		ArrayList<String> names = new ArrayList<String>();
+		names.add("Hadi");
+		names.add("Anurag");
+		names.add("Arthur");
+		names.add("Richard");
+		names.add("David");
+		names.add("Ryan");
+		PrintWriter p = new PrintWriter(new File("MessageLog.txt"));
+		MainInterface frame = new MainInterface(names, p);
+		frame.setVisible(true);
 		
+		
+		System.out.println("YEs");
+//		p.close();
+		System.out.println("No");
+		/*
 		//open port
 		Socket s = new Socket(host, port);
 		
@@ -38,6 +49,8 @@ public class Test {
 		
 		in.close();
 		s.close();
+		
+		*/
 	}
 
 }

@@ -57,7 +57,7 @@ public class GUI extends JFrame {
 //				if(key.getKeyCode() == 10)
 //					printText(composeField, messagesArea); 
 //			}
-//		});
+
 		
 		contentPane.add(composeField);
 		
@@ -65,14 +65,12 @@ public class GUI extends JFrame {
 		sendButton.setBounds(419, 408, 62, 23);
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent mouse) {
-				//try{
+				try{
 				client.postMessage(composeField.getText());
-				//}
-				/*
+				}
 				catch (IOException ioe) {
 					ioe.printStackTrace();
 				}
-				*/
 			}
 		});
 		
