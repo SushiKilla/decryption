@@ -100,8 +100,7 @@ public class MainInterface extends JFrame {
 	public void messageToServer(String message, String user, PrintWriter out){
 		System.out.println(message);
 		out.print(user + ": " + message + "\n");
-		out.println();
-		out.close();
+		out.flush();
 	}
 	/**
 	 * Prints the text in the user's window

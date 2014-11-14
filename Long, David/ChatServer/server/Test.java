@@ -16,14 +16,11 @@ public class Test {
 		names.add("Richard");
 		names.add("David");
 		names.add("Ryan");
-		PrintWriter p = new PrintWriter(new File("MessageLog.txt"));
+		PrintWriter p = new PrintWriter(new File("H:/git-repositories/decryption/Long, David/"
+				+ "ChatServer/server/MessageLog.txt"));
 		MainInterface frame = new MainInterface(names, p);
 		frame.setVisible(true);
 		
-		
-		System.out.println("YEs");
-//		p.close();
-		System.out.println("No");
 		/*
 		//open port
 		Socket s = new Socket(host, port);
