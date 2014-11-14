@@ -17,26 +17,26 @@ public class Server {
 			ServerSocket serverSocket = new ServerSocket(serverNum);
 		    
 		    //create:
-		    ArrayList<Socket> clientSockets = new ArrayList<Socket>(); //serverSocket.accept() to accept a client;
+		    ArrayList<Socket> clientSockets = new ArrayList<Socket>();
+		    //serverSocket.accept() to accept a client
 		    //PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 		    //BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		    
 		    
 		    ArrayList<Thread> threads = new ArrayList<Thread>();
 		    ArrayList<User> users = new ArrayList<User>();
 		    
 		    try
 		    {
-		    	boolean done = false;
-		    	
-		    	while (!done)
+		    	while (true)
 		    	{
 		    		//accept client
 		    		Socket c = serverSocket.accept();
 		    		clientSockets.add(c);
 		    		
 		    		//create thread to deal with client
-		    		threads.add(new ClientThread("", serverNum));
+		    		ClientThread t = new ClientThread("", serverNum);
+		    		t.run();
+		    		threads.add(t);
 		    		
 		    		
 		    	}
