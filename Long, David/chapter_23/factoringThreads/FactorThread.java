@@ -36,7 +36,7 @@ public class FactorThread implements Runnable{
 		{
 			if (num.mod(count).equals(BigInteger.ZERO))
 			{
-				BigInteger f1 = count;
+				BigInteger f1 = count; 
 				BigInteger f2 = num.divide(count);				
 				master.setDone(PASSWORD, f1, f2);
 			}
