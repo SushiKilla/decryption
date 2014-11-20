@@ -5,7 +5,8 @@ import java.util.ArrayList;
 
 public class RelativelyPrimeFactorMaster {
 
-	ArrayList<FactorThread> threads = new ArrayList<FactorThread>();
+	ArrayList<FactorThread> factors = new ArrayList<FactorThread>();
+	ArrayList<Thread> threads = new ArrayList<Thread>();
 	BigInteger one, two, num;
 	private final long PASS;
 	private boolean done;
@@ -48,11 +49,12 @@ public class RelativelyPrimeFactorMaster {
 			for (int i = 0; i < workers; i++)
 			{
 				FactorThread f = new FactorThread(this, num, previous, previous.add(increment), PASS);
-				threads.add(f);
+				factors.add(f);
 				previous = previous.add(increment);
 			}
-			for (FactorThread t: threads)
-				t.run();
+			for (int i = 0; i < factors.size(); i++)
+				threads.add(new Thread(factors.get(i)));
+			for (Thread t: threads) t.start();
 		}
 	}
 	
@@ -63,11 +65,11 @@ public class RelativelyPrimeFactorMaster {
 		one = f1;
 		two = f2;
 		
-		for (FactorThread t: threads)
+		for (FactorThread t: factors)
 			t.setDone();
 		
 		System.out.println("This took " + (System.currentTimeMillis()-timeIn) + " milliseconds");
-		System.out.println(num + " was factored by " + threads.size() + " threads.");
+		System.out.println(num + " was factored by " + factors.size() + " threads.");
 		System.out.println(num + "'s factors are " + one + " and " + two + ".");
 		
 		done = true;
