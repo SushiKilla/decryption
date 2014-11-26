@@ -3,7 +3,12 @@ package server;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -46,8 +51,8 @@ public class GUI extends JFrame {
 	
 	private ClientThread client;
 	
-	private JList<String> userList;
-	private DefaultListModel<String> userListModel;
+//	private JList<String> userList;
+//	private DefaultListModel<String> userListModel;
 	
 	private JTextArea messagesDisplayArea;
 	private JTextField composeField;
@@ -76,16 +81,16 @@ public class GUI extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		userList = new JList<>();
-		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		userList.setLayoutOrientation(JList.VERTICAL);
-		userList.setBounds(668, 421, -163, -400);
-		userList.setSelectedIndex(1);
-		
-		userListModel = new DefaultListModel<>();
-		userList.setModel(userListModel);
-		
-		contentPane.add(userList);
+//		userList = new JList<>();
+//		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		userList.setLayoutOrientation(JList.VERTICAL);
+//		userList.setBounds(668, 421, -163, -400);
+//		userList.setSelectedIndex(1);
+//		
+//		userListModel = new DefaultListModel<>();
+//		userList.setModel(userListModel);
+//		
+//		contentPane.add(userList);
 		
 		messagesDisplayArea = new JTextArea();
 		messagesDisplayArea.setEditable(false);
@@ -95,8 +100,12 @@ public class GUI extends JFrame {
 		
 		composeField = new JTextField();
 		composeField.setBounds(10, 409, 400, 22);
-//		composeField.addKeyListener(new KeyAdapter() {
-//			public void keyPressed(KeyEvent key) {if(key.getKeyCode() == 10) printText(composeField, messagesDisplayArea); }});
+		composeField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent key) {
+				if(key.getKeyCode() == 10)
+					sendMessage();
+			}
+		});
 		contentPane.add(composeField);
 		
 		sendBtn = new JButton("Send");
@@ -104,21 +113,24 @@ public class GUI extends JFrame {
 		sendBtn.setBounds(419, 408, 62, 23);
 		sendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent mouse) {
-//				printText(composeField, messagesDisplayArea);
-				try {
-					client.postMessage(composeField.getText());
-					composeField.setText("");
-				} catch(IOException ioe) {
-					ioe.printStackTrace();
-				}
+				sendMessage();
 			}
 		});
 		contentPane.add(sendBtn);
+		
+		addWindowListener(new WindowAdapter() {
+			@Override
+		    public void windowClosing(WindowEvent windowEvent) {
+				client.disconnect();
+		    }
+		});
 	}
 	
 	public void promptUsername() {
-		// TODO: Make better; put input box in main GUI
 		String username = JOptionPane.showInputDialog("Pick a username");
+		if(username == null)
+			username = "";
+			
 		try {
 			client.join(username);
 		} catch (IOException e) {
@@ -126,28 +138,43 @@ public class GUI extends JFrame {
 		}
 	}
 	
+	private void sendMessage() {
+		try {
+			client.postMessage(composeField.getText());
+			composeField.setText("");
+		} catch(IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
 	// Responses to server commands
 	public void newPost(String sender, String message, long timestamp) {
-		messagesDisplayArea.append(String.format("%s %s: %s\n", DATE_FORMAT.format(new Date(timestamp)), sender, message));
+		messagesDisplayArea.append(String.format("%s %s: %s\n", DATE_FORMAT.format(new Date(timestamp)), sender, URLDecoder.decode(message)));
 	}
 	
-	public void newPM(String sender, String message, long timestamp) {
-		messagesDisplayArea.append(String.format("[%s %s]: %s\n", DATE_FORMAT.format(new Date(timestamp)), sender, message));
-	}
-	
-	public void userJoin(String username, long timestamp) {
-		userListModel.addElement(username);
-	}
-	
-	public void userLeave(String username, long timestamp) {
-		userListModel.removeElement(username);
-	}
+//	public void newPM(String sender, String message, long timestamp) {
+//		messagesDisplayArea.append(String.format("[%s %s]: %s\n", DATE_FORMAT.format(new Date(timestamp)), sender, URLDecoder.decode(message)));
+//	}
+//	
+//	public void userJoin(String username) {
+//		userListModel.addElement(username);
+//	}
+//	
+//	public void userLeave(String username) {
+//		userListModel.removeElement(username);
+//	}
 	
 	public void error(String message) {
 		if(message.equals("USERNAME_TAKEN")) {
 			promptUsername();
 		}
 	}
+	
+//	public void setUserList(String[] users) {
+//		userListModel.clear();
+//		for(String s : users)
+//			userListModel.addElement(s);
+//	}
 	
 //	/**
 //	 * Prints the text in the user's window

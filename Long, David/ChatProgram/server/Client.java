@@ -2,9 +2,13 @@ package server;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 public class Client {
 	public static void main(String[] args) throws IOException {
-		ClientThread clientThread = new ClientThread("10.5.100.90", 8888);
+		String[] address = JOptionPane.showInputDialog("Enter the server's address (IP:port)").split(":");
+		
+		ClientThread clientThread = new ClientThread(address[0], Integer.parseInt(address[1]));
 		clientThread.start();
 	}
 }

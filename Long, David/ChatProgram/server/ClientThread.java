@@ -27,7 +27,8 @@ public class ClientThread extends Thread {
 	private String username;
 	
 	private boolean attemptJoin;
-	private boolean requestUserList;
+//	private boolean requestUserList;
+	private boolean quit;
 	
 	public ClientThread(String serverAddress, int port) throws IOException {
 		gui = new GUI(this);
@@ -54,14 +55,18 @@ public class ClientThread extends Thread {
 		pmQueue.add(new String[] {recepient, URLEncoder.encode(message)});
 	}
 	
-	public void requestUserList() throws IOException {
-		requestUserList = true;
+//	public void requestUserList() throws IOException {
+//		requestUserList = true;
+//	}
+	
+	public void disconnect() {
+		quit = true;
 	}
 	
 	@Override
 	public void run() {
 		try {
-			while(true) {
+			while(!quit) {
 				while(!postQueue.isEmpty())
 					socketOut.printf("POST %s\n", postQueue.poll());
 				
@@ -71,11 +76,11 @@ public class ClientThread extends Thread {
 				if(attemptJoin)
 					socketOut.printf("JOIN %s\n", username);
 				
-				if(requestUserList)
-					socketOut.printf("USER_LIST\n");
+//				if(requestUserList)
+//					socketOut.printf("USER_LIST\n");
 				
 				attemptJoin = false;
-				requestUserList = false;
+//				requestUserList = false;
 				
 				socketOut.flush();
 						
@@ -93,24 +98,32 @@ public class ClientThread extends Thread {
 						gui.newPost(nextLine[1], nextLine[2], Long.parseLong(nextLine[3]));
 						break;
 					
-					case "NEW_PM":
-						gui.newPost(nextLine[1], nextLine[2], Long.parseLong(nextLine[3]));
-						break;
-					
-					case "USER_JOIN":
-						gui.userJoin(nextLine[1], Long.parseLong(nextLine[2]));
-						break;
+//					case "NEW_PM":
+//						gui.newPost(nextLine[1], nextLine[2], Long.parseLong(nextLine[3]));
+//						break;
+//					
+//					case "USER_JOIN":
+//						gui.userJoin(nextLine[1]);
+//						break;
+//						
+//					case "USER_LEAVE":
+//						gui.userLeave(nextLine[1]);
+//						break;
+//					
+//					case "USER_LIST":
+//						String[] users = new String[nextLine.length - 1];
+//						System.arraycopy(nextLine, 1, users, 0, users.length);
+//						gui.setUserList(users);
+//						break;
 						
-					case "USER_LEAVE":
-						gui.userLeave(nextLine[1], Long.parseLong(nextLine[2]));
-						break;
-					
 					case "ERROR":
 						gui.error(nextLine[1]);
 						break;
 					}
 				}
 			}
+			
+			socketOut.printf("QUIT\n");
 		} catch(IOException ioe) {}
 	}
 }
