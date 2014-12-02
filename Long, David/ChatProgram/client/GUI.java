@@ -1,4 +1,4 @@
-package server;
+package client;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -94,9 +95,15 @@ public class GUI extends JFrame {
 		
 		messagesDisplayArea = new JTextArea();
 		messagesDisplayArea.setEditable(false);
-		messagesDisplayArea.setBounds(10, 10, 472, 393);
+		messagesDisplayArea.setBounds(0, 0, 472, 393);
 		messagesDisplayArea.setText(null);
-		contentPane.add(messagesDisplayArea);
+//		contentPane.add(messagesDisplayArea);
+		
+		JScrollPane scroll = new JScrollPane(messagesDisplayArea);
+		scroll.add(messagesDisplayArea);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll.setBounds(10, 10, 472, 393);
+		contentPane.add(scroll);
 		
 		composeField = new JTextField();
 		composeField.setBounds(10, 409, 400, 22);

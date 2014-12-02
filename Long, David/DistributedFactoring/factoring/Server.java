@@ -1,4 +1,4 @@
-package server;
+package factoring;
 
 import java.io.IOException;
 
