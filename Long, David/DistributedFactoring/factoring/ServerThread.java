@@ -1,9 +1,12 @@
 package factoring;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
+
+import factoringThreads.BigIntSqRoot;
 
 public class ServerThread extends Thread {
 	private ServerSocket serverSocket;
@@ -13,15 +16,25 @@ public class ServerThread extends Thread {
 	public ServerThread(int port) throws IOException {
 		serverSocket = new ServerSocket(port);
 	}
-	
-	public void userJoined() {
-		for(ClientHandlerThread clientHandler : clientHandlers) {
-			clientHandler.sendUserJoin();
-		}
-	}
-	
-	public void userQuit() {
+
+	/**
+	 * Precondition: NUM IS NON-EVEN RELATIVELY PRIME NUMBER
+	 * @param num IS NON-EVEN RELATIVELY PRIME NUMBER
+	 */
+	public void assignWork(BigInteger num)
+	{
+		int workers = clientHandlers.size();
+		BigInteger previous = new BigInteger("3");
 		
+		BigInteger increment = BigIntSqRoot.bigIntSqRootCeil(num).divide(new BigInteger(("" + workers)));
+		if (increment.mod(new BigInteger("2")).equals(BigInteger.ONE))
+			increment.add(BigInteger.ONE);
+		
+		for (int i = 0; i < workers; i++)
+		{
+			clientHandlers.get(i).assignWork(num, previous, previous.add(increment));
+			previous = previous.add(increment);
+		}
 	}
 	
 	@Override
@@ -33,7 +46,8 @@ public class ServerThread extends Thread {
 				
 				clientHandlers.add(clientHandler);
 			}
-		} catch(IOException ioe) {
+		}
+		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
 	}
