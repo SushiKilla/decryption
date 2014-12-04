@@ -36,10 +36,9 @@ public class FactorThread implements Runnable{
 			if (num.mod(count).equals(BigInteger.ZERO))
 			{
 				BigInteger f1 = count; 
-				BigInteger f2 = num.divide(count);	
+				BigInteger f2 = num.divide(count);					
+				out.println("FOUND " + f1.toString() + " " + f2.toString());	
 				
-				//
-				out.println();
 			}
 			
 			count = count.add(TWO);

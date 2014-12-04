@@ -37,6 +37,15 @@ public class ServerThread extends Thread {
 		}
 	}
 	
+	public void setDone()
+	{
+		int workers = clientHandlers.size();
+		for (int i = 0; i < workers; i++)
+		{
+			clientHandlers.get(i).stopWork();
+		}
+	}
+	
 	@Override
 	public void run() {
 		try {

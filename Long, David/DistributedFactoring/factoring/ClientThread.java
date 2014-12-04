@@ -17,7 +17,6 @@ public class ClientThread extends Thread {
 	private Scanner socketIn;
 	private PrintWriter socketOut;
 	
-	private boolean hasWork = false;
 	private boolean done = false;
 	
 	
@@ -25,6 +24,8 @@ public class ClientThread extends Thread {
 	private BigInteger count;
 	private BigInteger end;
 	private final BigInteger TWO = new BigInteger("2");
+	
+	private FactorThread worker;
 	
 	public ClientThread(String serverAddress, int port) throws IOException {		
 		socket = new Socket(serverAddress, port);
@@ -45,24 +46,20 @@ public class ClientThread extends Thread {
 					System.out.println(Arrays.toString(nextLine));
 					
 					switch(nextLine[0]) {
-					case "NEW_POST":
-						break;
-						
 					case "ASSIGN_WORK":
-						hasWork = true;
 						num = new BigInteger(nextLine[1]);
 						count = new BigInteger(nextLine[2]);
 						end = new BigInteger(nextLine[3]);
+						worker = new FactorThread(socketOut, num, count, end);
+						worker.run();
 						break;
 						
 					case "FACTOR_FOUND":
-						hasWork = false;
+						worker.setDone();
+						worker = null;
 						break;
 					}
-				}
-				
-				
-				
+				}		
 			}
 		}
 		catch(IOException e)

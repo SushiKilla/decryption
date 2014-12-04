@@ -28,9 +28,9 @@ public class ClientHandlerThread extends Thread {
 		socketOut.flush();
 	}
 
-	public void sendFactorFound(BigInteger f1, BigInteger f2)
+	public void stopWork()
 	{
-		socketOut.printf("FACTOR_FOUND %s %s\n", f1.toString(), f2.toString());
+		socketOut.println("FACTOR_FOUND");
 		socketOut.flush();
 	}
 	
@@ -42,12 +42,13 @@ public class ClientHandlerThread extends Thread {
 				System.out.println(Arrays.toString(nextLine));
 				
 				switch(nextLine[0]) {
-				case "JOIN":
-
-					break;
+				
 										
-				case "QUIT":
-					
+				case "FOUND":
+					System.out.println("Factors found: ");
+					System.out.println(nextLine[1] + " and " + nextLine[2]);
+					server.setDone();
+					break;
 				}
 			}
 		}
