@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Server {
 	public static void main(String[] args) throws IOException {
-		ServerThread serverThread = new ServerThread(8887);
+		ServerThread serverThread = new ServerThread(8888);
 		serverThread.start();
 		
 		Scanner k = new Scanner(System.in);

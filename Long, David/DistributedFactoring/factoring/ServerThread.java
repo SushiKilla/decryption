@@ -9,6 +9,9 @@ import java.util.List;
 import factoringThreads.BigIntSqRoot;
 
 public class ServerThread extends Thread {
+	
+	private long timeIn = 0;
+	
 	private ServerSocket serverSocket;
 	
 	private List<ClientHandlerThread> clientHandlers = new ArrayList<>();
@@ -23,6 +26,8 @@ public class ServerThread extends Thread {
 	 */
 	public void assignWork(BigInteger num)
 	{
+		timeIn = System.currentTimeMillis();
+		
 		int workers = clientHandlers.size();
 		BigInteger previous = new BigInteger("3");
 		
@@ -39,6 +44,8 @@ public class ServerThread extends Thread {
 	
 	public void setDone()
 	{
+		System.out.println("It took " + (System.currentTimeMillis() - timeIn) + " ms");
+		
 		int workers = clientHandlers.size();
 		for (int i = 0; i < workers; i++)
 		{

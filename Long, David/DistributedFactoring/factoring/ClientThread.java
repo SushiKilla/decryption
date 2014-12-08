@@ -25,7 +25,7 @@ public class ClientThread extends Thread {
 	private BigInteger end;
 	private final BigInteger TWO = new BigInteger("2");
 	
-	private FactorThread worker;
+	private RelativelyPrimeFactorMaster worker;
 	
 	public ClientThread(String serverAddress, int port) throws IOException {		
 		socket = new Socket(serverAddress, port);
@@ -50,11 +50,12 @@ public class ClientThread extends Thread {
 						num = new BigInteger(nextLine[1]);
 						count = new BigInteger(nextLine[2]);
 						end = new BigInteger(nextLine[3]);
-						worker = new FactorThread(socketOut, num, count, end);
-						worker.run();
+						int numWorkers = 4;
+						worker = new RelativelyPrimeFactorMaster(socketOut, num, count, end, numWorkers);
+						worker.factor();
 						break;
 						
-					case "FACTOR_FOUND":
+					case "FOUND":
 						worker.setDone();
 						worker = null;
 						break;

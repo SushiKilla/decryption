@@ -13,7 +13,6 @@ public class ClientHandlerThread extends Thread {
 	private Scanner socketIn;
 	private PrintWriter socketOut;
 	
-	
 	public ClientHandlerThread(ServerThread parentServer, Socket clientSocket) throws IOException {
 		server = parentServer;
 		socket = clientSocket;
@@ -30,7 +29,7 @@ public class ClientHandlerThread extends Thread {
 
 	public void stopWork()
 	{
-		socketOut.println("FACTOR_FOUND");
+		socketOut.println("FOUND");
 		socketOut.flush();
 	}
 	

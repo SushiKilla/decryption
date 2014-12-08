@@ -10,14 +10,15 @@ public class FactorThread implements Runnable{
 	private boolean done;
 	private final BigInteger TWO = new BigInteger("2");
 	private PrintWriter out;
-	
+	private RelativelyPrimeFactorMaster m;
 	/**
 	 * Start must be an odd integer
 	 * @param start
 	 * @param end
 	 */
-	public FactorThread(PrintWriter out, BigInteger num, BigInteger start, BigInteger end)
+	public FactorThread(RelativelyPrimeFactorMaster m, PrintWriter out, BigInteger num, BigInteger start, BigInteger end)
 	{
+		this.m = m;
 		this.out = out;
 		done = false;
 		count = start;
@@ -36,14 +37,11 @@ public class FactorThread implements Runnable{
 			if (num.mod(count).equals(BigInteger.ZERO))
 			{
 				BigInteger f1 = count; 
-				BigInteger f2 = num.divide(count);					
-				out.println("FOUND " + f1.toString() + " " + f2.toString());	
-				
-			}
-			
-			count = count.add(TWO);
-		}
-		
-	}
+				BigInteger f2 = num.divide(count);
 
+				m.setDone(f1, f2);
+			}		
+			count = count.add(TWO);
+		}	
+	}
 }
