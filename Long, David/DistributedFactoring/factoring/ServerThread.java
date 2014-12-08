@@ -32,8 +32,8 @@ public class ServerThread extends Thread {
 		BigInteger previous = new BigInteger("3");
 		
 		BigInteger increment = BigIntSqRoot.bigIntSqRootCeil(num).divide(new BigInteger(("" + workers)));
-		if (increment.mod(new BigInteger("2")).equals(BigInteger.ONE))
-			increment.add(BigInteger.ONE);
+		if (increment.mod(new BigInteger("2")).equals(BigInteger.ZERO))
+			increment = increment.add(BigInteger.ONE);
 		
 		for (int i = 0; i < workers; i++)
 		{

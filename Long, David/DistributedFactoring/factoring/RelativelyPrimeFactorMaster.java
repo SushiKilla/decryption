@@ -30,8 +30,10 @@ public class RelativelyPrimeFactorMaster {
 	{
 		BigInteger previous = start;
 		BigInteger increment = end.subtract(start);
-		if (increment.mod(new BigInteger("2")).equals(BigInteger.ONE))
-			increment.add(BigInteger.ONE);
+		if (previous.mod(new BigInteger("2")).equals(BigInteger.ZERO))
+			previous = previous.subtract(BigInteger.ONE);
+		if (increment.mod(new BigInteger("2")).equals(BigInteger.ZERO))
+			increment = increment.add(BigInteger.ONE);
 		
 		for (int i = 0; i < workers; i++)
 		{
