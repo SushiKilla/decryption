@@ -18,14 +18,7 @@ public class HashSet<E> {
 	public boolean add(E e)
 	{
 		int pos = Math.abs(e.hashCode()) % FIXED_LENGTH;
-		boolean inArray = false;
-		for (E obj: list[pos])
-			if (obj.equals(e))
-			{
-				inArray = true;
-				break;
-			}
-		if (inArray)
+		if (list[pos].contains(e))
 			return false;
 		list[pos].add(e);
 		return true;

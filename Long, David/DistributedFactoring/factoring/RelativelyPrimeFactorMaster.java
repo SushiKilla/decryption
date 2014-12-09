@@ -32,7 +32,7 @@ public class RelativelyPrimeFactorMaster {
 		BigInteger increment = end.subtract(start);
 		if (previous.mod(new BigInteger("2")).equals(BigInteger.ZERO))
 			previous = previous.subtract(BigInteger.ONE);
-		if (increment.mod(new BigInteger("2")).equals(BigInteger.ZERO))
+		if (increment.mod(new BigInteger("2")).equals(BigInteger.ONE))
 			increment = increment.add(BigInteger.ONE);
 		
 		for (int i = 0; i < workers; i++)
