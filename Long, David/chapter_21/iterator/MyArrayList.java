@@ -220,7 +220,7 @@ public class MyArrayList<E>
         public void remove()
         {
         	verifyModCount();
-        	if (!canRemove) 
+        	if (!canRemove)///asdf
         	
         	
         	MyArrayList.this.remove(pos);
