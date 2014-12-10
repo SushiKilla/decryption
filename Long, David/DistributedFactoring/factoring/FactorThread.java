@@ -21,8 +21,8 @@ public class FactorThread implements Runnable{
 		this.m = m;
 		this.out = out;
 		done = false;
-		count = start;
 		this.num = num;
+		count = start;
 		this.end = end;
 	}
 	
@@ -36,6 +36,7 @@ public class FactorThread implements Runnable{
 		{
 			if (num.mod(count).equals(BigInteger.ZERO))
 			{
+				System.out.println("YES");
 				BigInteger f1 = count; 
 				BigInteger f2 = num.divide(count);
 

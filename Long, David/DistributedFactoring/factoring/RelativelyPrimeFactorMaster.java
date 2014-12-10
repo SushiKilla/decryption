@@ -29,7 +29,7 @@ public class RelativelyPrimeFactorMaster {
 	public void factor()
 	{
 		BigInteger previous = start;
-		BigInteger increment = end.subtract(start);
+		BigInteger increment = (end.subtract(start)).divide(new BigInteger("" + workers));
 		if (previous.mod(new BigInteger("2")).equals(BigInteger.ZERO))
 			previous = previous.subtract(BigInteger.ONE);
 		if (increment.mod(new BigInteger("2")).equals(BigInteger.ONE))

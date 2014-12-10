@@ -6,6 +6,7 @@ public class HashSet<E> {
 	private final int FIXED_LENGTH = 1000;
 	private ArrayList<E> list[];
 	
+	@SuppressWarnings("unchecked")
 	public HashSet()
 	{
 		list = new ArrayList[FIXED_LENGTH];
@@ -18,8 +19,7 @@ public class HashSet<E> {
 	public boolean add(E e)
 	{
 		int pos = Math.abs(e.hashCode()) % FIXED_LENGTH;
-		if (list[pos].contains(e))
-			return false;
+		if (list[pos].contains(e)) return false;
 		list[pos].add(e);
 		return true;
 	}

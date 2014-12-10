@@ -10,7 +10,7 @@ public class Server {
 		
 		BigInteger specialNum = new BigInteger("51");
 		
-		ServerThread serverThread = new ServerThread(8888);
+		ServerThread serverThread = new ServerThread(8887);
 		serverThread.start();
 		
 		Scanner k = new Scanner(System.in);
@@ -20,9 +20,9 @@ public class Server {
 		if (line!= null)
 		{
 		Random r = new Random();
-		BigInteger primeOne = BigInteger.probablePrime(32, r);
+		BigInteger primeOne = BigInteger.probablePrime(10, r);
 		System.out.println("Factor 1: " + primeOne);
-		BigInteger primeTwo = BigInteger.probablePrime(32, r);	
+		BigInteger primeTwo = BigInteger.probablePrime(10, r);	
 		System.out.println("Factor 2: " + primeTwo);	
 		BigInteger relativelyPrime = primeOne.multiply(primeTwo);
 		System.out.println("Number to be factored: " + relativelyPrime);

@@ -157,29 +157,25 @@ public class MyArrayList<E>
 
         public boolean hasNext()
         {
-            verifyModCount();
-            
+            verifyModCount();       
             return pos < a.length;
         }
 
         public boolean hasPrevious()
         {
-        	verifyModCount();
-        	
+        	verifyModCount();      	
             return pos > 0;
         }
 
         public int previousIndex()
         {
-        	verifyModCount();
-        	
+        	verifyModCount();    	
         	return pos - 1;
         }
 
         public int nextIndex()
         {
-        	verifyModCount();
-            
+        	verifyModCount();       
         	return pos + 1;
         }
 
@@ -189,7 +185,10 @@ public class MyArrayList<E>
         	verifyModCount();
             
         	if (!hasPrevious()) throw new NoSuchElementException();
-        	canRemove = true;
+
+        	canSet = true;
+            canRemove = true;
+        	
         	return (E) a[--pos];
         }
 
@@ -198,32 +197,42 @@ public class MyArrayList<E>
         {
         	verifyModCount();
             if (!hasNext()) throw new NoSuchElementException();
+            
+            canSet = true;
             canRemove = true;
+            
         	return (E) a[++pos];
         }
 
         public void add(E o)
         {
         	verifyModCount();
-            
+
         	MyArrayList.this.add(pos, o);
-        	iterModCount++;
+        	
         	canRemove = false;
+        	canSet = false;
+        	iterModCount++;
         }
 
         public void set(E o)
         {
         	verifyModCount();
-            
+            if (!canSet) throw new IllegalStateException();
+            	
+        	MyArrayList.this.set(pos, o);
+        	iterModCount++;
         }
 
         public void remove()
         {
         	verifyModCount();
-        	if (!canRemove)///asdf
-        	
-        	
+        	if (!canRemove) throw new IllegalStateException();   	
+
         	MyArrayList.this.remove(pos);
+        	
+        	canRemove = false;
+        	canSet = false;
         	iterModCount++;
         }
     }
