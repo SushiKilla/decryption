@@ -41,8 +41,6 @@ public class ClientHandlerThread extends Thread {
 				System.out.println(Arrays.toString(nextLine));
 				
 				switch(nextLine[0]) {
-				
-										
 				case "FOUND":
 					System.out.println("Factors found: ");
 					System.out.println(nextLine[1] + " and " + nextLine[2]);

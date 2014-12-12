@@ -9,7 +9,7 @@ public class RelativelyPrimeFactorMaster {
 	ArrayList<FactorThread> factors = new ArrayList<FactorThread>();
 	ArrayList<Thread> threads = new ArrayList<Thread>();
 	BigInteger one, two, num, start, end;
-	PrintWriter out;
+	PrintWriter socketOut;
 	int workers;
 	
 	/**
@@ -18,9 +18,9 @@ public class RelativelyPrimeFactorMaster {
 	 * @param n  = a relatively prime Integer
 	 * @param workers = number of workers
 	 */
-	public RelativelyPrimeFactorMaster(PrintWriter out, BigInteger n, BigInteger start, BigInteger end, int workers)
+	public RelativelyPrimeFactorMaster(PrintWriter socketOut, BigInteger n, BigInteger start, BigInteger end, int workers)
 	{
-		this.out = out;
+		this.socketOut = socketOut;
 		this.start = start; this.end = end;	
 		num = n;
 		this.workers = workers;
@@ -37,7 +37,7 @@ public class RelativelyPrimeFactorMaster {
 		
 		for (int i = 0; i < workers; i++)
 		{
-			FactorThread f = new FactorThread(this, out, num, previous, previous.add(increment));
+			FactorThread f = new FactorThread(this, num, previous, previous.add(increment));
 			factors.add(f);
 			previous = previous.add(increment);
 		}
@@ -55,7 +55,8 @@ public class RelativelyPrimeFactorMaster {
 		for (FactorThread t: factors)
 			t.setDone();
 		
-		out.println("FOUND " + f1.toString() + " " + f2.toString());
+		socketOut.printf("FOUND %s %s\n", f1.toString(), f2.toString());
+		socketOut.flush();
 	}
 	
 	public void setDone()

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class HashSet<E> {
 	private final int FIXED_LENGTH = 1000;
 	private ArrayList<E> list[];
+	private int size = 0;
 	
 	@SuppressWarnings("unchecked")
 	public HashSet()
@@ -21,6 +22,7 @@ public class HashSet<E> {
 		int pos = Math.abs(e.hashCode()) % FIXED_LENGTH;
 		if (list[pos].contains(e)) return false;
 		list[pos].add(e);
+		size++;
 		return true;
 	}
 	
@@ -38,11 +40,6 @@ public class HashSet<E> {
 	
 	public int size()
 	{
-		int size = 0;
-		for (int i = 0; i < list.length; i++)
-		{
-			size += list[i].size();
-		}	
 		return size;
 	}	
 }

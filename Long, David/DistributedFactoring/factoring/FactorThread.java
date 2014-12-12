@@ -9,17 +9,15 @@ public class FactorThread implements Runnable{
 	private BigInteger end;
 	private boolean done;
 	private final BigInteger TWO = new BigInteger("2");
-	private PrintWriter out;
 	private RelativelyPrimeFactorMaster m;
 	/**
 	 * Start must be an odd integer
 	 * @param start
 	 * @param end
 	 */
-	public FactorThread(RelativelyPrimeFactorMaster m, PrintWriter out, BigInteger num, BigInteger start, BigInteger end)
+	public FactorThread(RelativelyPrimeFactorMaster m, BigInteger num, BigInteger start, BigInteger end)
 	{
 		this.m = m;
-		this.out = out;
 		done = false;
 		this.num = num;
 		count = start;
