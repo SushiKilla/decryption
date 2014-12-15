@@ -20,9 +20,9 @@ public class Server {
 		if (line!= null)
 		{
 		Random r = new Random();
-		BigInteger primeOne = BigInteger.probablePrime(10, r);
+		BigInteger primeOne = BigInteger.probablePrime(20, r);
 		System.out.println("Factor 1: " + primeOne);
-		BigInteger primeTwo = BigInteger.probablePrime(10, r);	
+		BigInteger primeTwo = BigInteger.probablePrime(22, r);	
 		System.out.println("Factor 2: " + primeTwo);	
 		BigInteger relativelyPrime = primeOne.multiply(primeTwo);
 		System.out.println("Number to be factored: " + relativelyPrime);
