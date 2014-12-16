@@ -201,7 +201,7 @@ public class MyArrayList<E>
             canSet = true;
             canRemove = true;
             
-        	return (E) a[++pos];
+        	return (E) a[pos++];
         }
 
         public void add(E o)
