@@ -286,7 +286,6 @@ public class MyLinkedList<E>
 		public E next()
         {
         	verifyModCount();
-        	
         	return null;
         }
 
