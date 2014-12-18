@@ -1,5 +1,7 @@
 package linked_list;
 
+import java.util.ConcurrentModificationException;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 public class MyLinkedList<E>
@@ -206,6 +208,101 @@ public class MyLinkedList<E>
             value = initValue;
             prev = initPrev;
             next = initNext;
+        }
+    }
+    
+    public ListIterator<E> listIterator()
+	{
+	    return new MyListIterator();
+	}
+	
+	public ListIterator<E> listIterator(int index)
+	{
+		return new MyListIterator(index);
+	}
+	
+	private class MyListIterator implements ListIterator<E>
+    {
+		private int pos;
+		private int iterModCount;
+		
+		private int modCount = 0;
+		
+		public MyListIterator()
+		{
+			pos = 0;
+			iterModCount = modCount;
+		}
+	    public MyListIterator(int n)
+        {
+	        pos = n;
+	        iterModCount = modCount;
+        }
+
+        private void verifyModCount()
+        {
+            if (modCount != iterModCount) throw new ConcurrentModificationException();
+            
+            
+        }
+
+        public boolean hasNext()
+        {
+            verifyModCount();     
+ 
+            return false;
+        }
+
+        public boolean hasPrevious()
+        {
+        	verifyModCount();   
+  	
+            return pos > 0;
+        }
+
+        public int previousIndex()
+        {
+        	verifyModCount();  
+        	
+        	return pos - 1;
+        }
+
+        public int nextIndex()
+        {
+        	verifyModCount();  
+        	
+        	return pos + 1;
+        }
+
+        @SuppressWarnings("unchecked")
+		public E previous()
+        {
+        	verifyModCount();
+        	
+        	return null;
+        }
+
+        @SuppressWarnings("unchecked")
+		public E next()
+        {
+        	verifyModCount();
+        	
+        	return null;
+        }
+
+        public void add(E o)
+        {
+        	verifyModCount();
+        }
+
+        public void set(E o)
+        {
+        	verifyModCount();
+        }
+
+        public void remove()
+        {
+        	verifyModCount();
         }
     }
 }

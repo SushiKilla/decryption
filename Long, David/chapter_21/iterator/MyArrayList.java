@@ -44,6 +44,8 @@ public class MyArrayList<E>
 		if (index < 0 || index >= size)
 			throw new IndexOutOfBoundsException();
 
+		modCount++;
+		
 		Object old = a[index];
 		a[index] = element;
 		return (E) old;
